@@ -1,0 +1,71 @@
+# Financial Markets Pipeline Configuration
+
+# Data Sources
+data_sources:
+  stocks:
+    enabled: true
+    symbols:
+      - "AAPL"   # Apple
+      - "GOOGL"  # Google
+      - "MSFT"   # Microsoft
+      - "AMZN"   # Amazon
+      - "TSLA"   # Tesla
+    
+  crypto:
+    enabled: true
+    coins:
+      - id: "bitcoin"
+        symbol: "BTC"
+      - id: "ethereum"
+        symbol: "ETH"
+      - id: "cardano"
+        symbol: "ADA"
+      - id: "solana"
+        symbol: "SOL"
+      - id: "polkadot"
+        symbol: "DOT"
+    
+  forex:
+    enabled: true
+    base_currency: "USD"
+    target_currencies:
+      - "EUR"
+      - "GBP"
+      - "JPY"
+      - "CHF"
+
+# APIs
+apis:
+  alpha_vantage:
+    base_url: "https://www.alphavantage.co/query"
+    function: "GLOBAL_QUOTE"
+    timeout: 30
+    
+  coingecko:
+    base_url: "https://api.coingecko.com/api/v3"
+    timeout: 30
+    
+  exchangerate:
+    base_url: "https://api.exchangerate-api.com/v4/latest"
+    timeout: 30
+
+# Database Configuration
+database:
+  type: "sqlite"
+  path: "data/markets.db"
+  tables:
+    stocks: "stocks"
+    crypto: "crypto"
+    forex: "forex"
+
+# Pipeline Configuration
+pipeline:
+  schedule_interval: "0 */4 * * *"  # Every 4 hours
+  max_retries: 3
+  retry_delay: 300
+  catchup: false
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
